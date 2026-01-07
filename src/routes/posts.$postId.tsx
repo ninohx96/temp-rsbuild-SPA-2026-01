@@ -8,6 +8,7 @@ import {
 import type { ErrorComponentProps } from '@tanstack/react-router'
 import axios from 'redaxios'
 import { Spinner } from '../components/Spinner'
+import { baseUrl } from '../constants/base-url'
 
 type PostType = {
   id: string
@@ -30,18 +31,12 @@ const fetchPost = async (postId: string) => {
 
   const commentsPromise = new Promise((r) => setTimeout(r, 2000))
     .then(() =>
-      axios.get<Array<CommentType>>(
-        `https://jsonplaceholder.typicode.com/comments?postId=${postId}`,
-      ),
+      axios.get<Array<CommentType>>(`${baseUrl}/comments?postId=${postId}`),
     )
     .then((r) => r.data)
 
   const post = await new Promise((r) => setTimeout(r, 1000))
-    .then(() =>
-      axios.get<PostType>(
-        `https://jsonplaceholder.typicode.com/posts/${postId}`,
-      ),
-    )
+    .then(() => axios.get<PostType>(`${baseUrl}/posts/${postId}`))
     .catch((err) => {
       if (err.status === 404) {
         throw new NotFoundError(`Post with id "${postId}" not found!`)

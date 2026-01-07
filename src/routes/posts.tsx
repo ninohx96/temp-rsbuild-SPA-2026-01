@@ -6,6 +6,7 @@ import {
 } from '@tanstack/react-router'
 import axios from 'redaxios'
 import { Spinner } from '../components/Spinner'
+import { baseUrl } from '../constants/base-url'
 
 type PostType = {
   id: string
@@ -17,7 +18,7 @@ const fetchPosts = async () => {
   console.info('Fetching posts...')
   await new Promise((r) => setTimeout(r, 100))
   return axios
-    .get<Array<PostType>>('https://jsonplaceholder.typicode.com/posts')
+    .get<Array<PostType>>(`${baseUrl}/posts`)
     .then((r) => r.data.slice(0, 10))
 }
 
