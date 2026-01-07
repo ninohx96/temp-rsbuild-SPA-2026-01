@@ -10,3 +10,7 @@ dist/
 # IDE
 .idea
 .vscode/settings.json
+
+# env
+.env.local
+!.env.example
